@@ -1,0 +1,91 @@
+.recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.food-card {
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.18s ease;
+}
+
+.food-card:hover {
+  transform: translateY(-3px);
+}
+
+.image-wrap {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+.imageCard {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.empty-image {
+  min-height: 180px;
+  display: grid;
+  place-content: center;
+  color: var(--ink-1);
+  background: #fff5e9;
+}
+
+.food-information {
+  padding: 0.9rem 1rem 1.05rem;
+}
+
+.food-title {
+  margin: 0 0 0.5rem;
+  font-weight: 800;
+}
+
+.food-information p {
+  margin: 0;
+  color: var(--ink-1);
+}
+
+.tag-row {
+  margin-top: 0.6rem;
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.tag {
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem;
+  background: #fff3e4;
+  color: var(--ink-1);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.tag.positive {
+  background: #e8f8ec;
+  color: #1c7a36;
+}
+
+.feedback-text {
+  text-align: center;
+  color: var(--ink-1);
+  margin-top: 1rem;
+}
+
+.feedback-text.error {
+  color: #b42318;
+}
+
+@media (max-width: 980px) {
+  .recipes-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .recipes-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -18,6 +18,8 @@ describe('App', () => {
     const fixture = TestBed.createComponent(App);
     await fixture.whenStable();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, app-food-recipe');
+    expect(compiled.querySelector('app-header')).toBeTruthy();
+    expect(compiled.querySelector('router-outlet')).toBeTruthy();
+    expect(compiled.querySelector('app-footer')).toBeTruthy();
   });
 });

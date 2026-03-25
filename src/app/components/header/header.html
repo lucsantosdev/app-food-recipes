@@ -1,0 +1,17 @@
+<header class="header-wrap">
+  <div class="header-inner">
+    <a routerLink="/" class="brand" aria-label="Go to home">
+      <img src="/favicon.svg" alt="Food Recipes logo" class="logo">
+      <div>
+        <p class="brand-title">Food Recipes</p>
+        <p class="brand-subtitle">Healthy choices, delightful flavors</p>
+      </div>
+    </a>
+
+    <nav class="header-nav" aria-label="Main navigation">
+      <a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+      <a routerLink="/search" routerLinkActive="is-active">Search</a>
+      <a routerLink="/about" routerLinkActive="is-active">About</a>
+    </nav>
+  </div>
+</header>

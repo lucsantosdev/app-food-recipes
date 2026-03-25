@@ -1,0 +1,91 @@
+.recipe-detail {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 1rem;
+}
+
+.textDiv,
+.imgDiv {
+  padding: 1rem;
+}
+
+.foodTitle {
+  margin: 0;
+  font-size: clamp(1.45rem, 3vw, 2.1rem);
+}
+
+.metrics-grid {
+  margin-top: 0.8rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.metrics-grid p {
+  margin: 0;
+  color: var(--ink-1);
+}
+
+.badge-row {
+  margin-top: 0.95rem;
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.badge {
+  border-radius: 999px;
+  background: #fff3e5;
+  color: var(--ink-1);
+  font-weight: 700;
+  font-size: 0.82rem;
+  padding: 0.2rem 0.6rem;
+}
+
+.badge-on {
+  background: #e9f9ef;
+  color: #176f33;
+}
+
+.source-link {
+  margin-top: 1rem;
+  display: inline-block;
+  color: var(--brand-0);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.source-link:hover {
+  text-decoration: underline;
+}
+
+.foodImg {
+  width: 100%;
+  border-radius: 12px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.empty-image {
+  margin: 0;
+  min-height: 280px;
+  display: grid;
+  place-content: center;
+  color: var(--ink-1);
+}
+
+.error-message {
+  margin: 1rem 0;
+  color: #b42318;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .recipe-detail {
+    grid-template-columns: 1fr;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}

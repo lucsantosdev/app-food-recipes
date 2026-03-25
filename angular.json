@@ -2,11 +2,12 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": "e8523790-a263-41c3-83de-7c7a92a090c1"
   },
   "newProjectRoot": "projects",
   "projects": {
-    "app-food-recipe": {
+    "app-food-recipes": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -25,7 +26,11 @@
               }
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "node_modules/bootstrap/dist/css/bootstrap.min.css"
+            ],
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
           },
           "configurations": {
@@ -56,10 +61,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "app-food-recipe:build:production"
+              "buildTarget": "app-food-recipes:build:production"
             },
             "development": {
-              "buildTarget": "app-food-recipe:build:development"
+              "buildTarget": "app-food-recipes:build:development"
             }
           },
           "defaultConfiguration": "development"

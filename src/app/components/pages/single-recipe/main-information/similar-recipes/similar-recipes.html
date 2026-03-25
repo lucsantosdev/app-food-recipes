@@ -1,0 +1,17 @@
+<section class="similar-wrap">
+  <p class="similar-title">Receitas similares</p>
+
+  <div *ngIf="loading" class="spinner-border d-block mx-auto my-4" role="status" aria-label="Carregando receitas similares"></div>
+  <p *ngIf="error" class="similar-feedback error">{{ error }}</p>
+
+  <div *ngIf="!loading && similarRecipes.length; else noRecipe" class="similar-grid">
+    <article routerLink="/recipe" [queryParams]="{ id: recipe.id }" class="cardRecipe surface-card" *ngFor="let recipe of similarRecipes">
+      <p class="recipe-name">{{ recipe.title }}</p>
+      <p class="recipe-time">Tempo de preparo: {{ recipe.readyInMinutes }} minutos</p>
+    </article>
+  </div>
+</section>
+
+<ng-template #noRecipe>
+  <p class="similar-feedback">Sem receitas semelhantes no momento.</p>
+</ng-template>

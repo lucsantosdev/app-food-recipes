@@ -1,0 +1,57 @@
+.hero {
+	position: relative;
+	overflow: hidden;
+	padding: clamp(1.2rem, 3vw, 2rem);
+	margin-bottom: 1.4rem;
+}
+
+.hero::after {
+	content: '';
+	position: absolute;
+	width: 260px;
+	height: 260px;
+	right: -90px;
+	top: -90px;
+	border-radius: 50%;
+	background: radial-gradient(circle, #ffd69f 0%, transparent 70%);
+}
+
+.hero-kicker {
+	margin: 0;
+	color: var(--brand-0);
+	font-weight: 800;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	font-size: 0.75rem;
+}
+
+h1 {
+	margin: 0.35rem 0 0;
+	max-width: 18ch;
+	font-size: clamp(1.7rem, 4vw, 2.4rem);
+}
+
+.hero-text {
+	margin: 0.65rem 0 0;
+	max-width: 58ch;
+	color: var(--ink-1);
+	line-height: 1.6;
+}
+
+.feed-section {
+	margin-top: 1.5rem;
+}
+
+.section-header {
+	margin-bottom: 1rem;
+}
+
+h2 {
+	margin: 0;
+	font-size: clamp(1.4rem, 3vw, 1.9rem);
+}
+
+.section-header p {
+	margin: 0.35rem 0 0;
+	color: var(--ink-1);
+}

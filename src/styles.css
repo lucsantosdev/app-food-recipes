@@ -1,1 +1,92 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Playfair+Display:wght@600;700&display=swap');
+
+:root {
+  --bg-0: #fff8f0;
+  --bg-1: #fffdf9;
+  --ink-0: #2f2016;
+  --ink-1: #6b4d36;
+  --brand-0: #d96b1b;
+  --brand-1: #f3a139;
+  --line: #efdbc7;
+  --card: #ffffffd9;
+  --focus: #3b82f6;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --shadow-soft: 0 16px 40px rgba(97, 52, 21, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  color: var(--ink-0);
+  background:
+    radial-gradient(circle at 15% 10%, #ffdcb9 0%, transparent 42%),
+    radial-gradient(circle at 85% 0%, #ffe9c9 0%, transparent 38%),
+    linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: 'Playfair Display', Georgia, serif;
+  letter-spacing: 0.01em;
+}
+
+a {
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.surface-card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+}
+
+.btn-app {
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--brand-0), var(--brand-1));
+  color: #fff;
+  font-weight: 700;
+  padding: 0.72rem 1.2rem;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.btn-app:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 20px rgba(217, 107, 27, 0.28);
+}
+
+.btn-app:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}

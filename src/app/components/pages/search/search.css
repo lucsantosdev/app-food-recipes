@@ -1,0 +1,91 @@
+.search-wrap {
+  padding: clamp(1rem, 2.5vw, 1.4rem);
+  margin-bottom: 1rem;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+}
+
+.search-subtitle {
+  margin: 0.4rem 0 0;
+  color: var(--ink-1);
+}
+
+.search-bar {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.55rem;
+}
+
+input {
+  flex: 1;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  min-height: 46px;
+  padding: 0.5rem 1rem;
+  background: #fff;
+}
+
+.search-feedback {
+  margin: 1rem 0;
+  color: var(--ink-1);
+  text-align: center;
+}
+
+.search-grid {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.foodCard {
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.18s ease;
+}
+
+.foodCard:hover {
+  transform: translateY(-3px);
+}
+
+.card-media {
+  aspect-ratio: 16 / 10;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-image {
+  display: grid;
+  place-content: center;
+  color: var(--ink-1);
+  background: #fff4e5;
+}
+
+.card-title {
+  margin: 0;
+  padding: 0.9rem 1rem;
+  font-weight: 700;
+}
+
+@media (max-width: 980px) {
+  .search-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .search-bar {
+    flex-direction: column;
+  }
+
+  .search-grid {
+    grid-template-columns: 1fr;
+  }
+}

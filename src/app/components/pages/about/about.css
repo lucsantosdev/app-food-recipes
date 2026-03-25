@@ -1,0 +1,44 @@
+.about {
+	padding: clamp(1rem, 2.5vw, 1.7rem);
+}
+
+h1 {
+	margin: 0 0 0.6rem;
+	font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+h2 {
+	margin: 0 0 0.45rem;
+	font-size: 1.15rem;
+}
+
+p,
+li {
+	color: var(--ink-1);
+	line-height: 1.65;
+}
+
+.about-grid {
+	margin-top: 1rem;
+	display: grid;
+	gap: 1rem;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+article {
+	padding: 1rem;
+	border: 1px solid var(--line);
+	border-radius: var(--radius-md);
+	background: #fff;
+}
+
+ul {
+	margin: 0;
+	padding-left: 1.1rem;
+}
+
+@media (max-width: 840px) {
+	.about-grid {
+		grid-template-columns: 1fr;
+	}
+}

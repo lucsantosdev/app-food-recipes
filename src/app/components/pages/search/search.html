@@ -1,0 +1,32 @@
+<section class="search-wrap surface-card">
+  <h1>Search Recipes</h1>
+  <p class="search-subtitle">Find dishes by name, ingredient, or style.</p>
+
+  <div class="search-bar">
+    <input
+      type="text"
+      name="search"
+      placeholder="Ex.: pasta, chicken salad, vegan curry"
+      [(ngModel)]="query"
+      (keydown.enter)="getSearch()"
+      aria-label="Recipe search"
+    />
+    <button class="btn-app" (click)="getSearch()" [disabled]="loading">Pesquisar</button>
+  </div>
+</section>
+
+<div *ngIf="loading" class="spinner-border d-block mx-auto mt-4" role="status" aria-label="Carregando busca"></div>
+
+<p *ngIf="feedback && !loading" class="search-feedback">{{ feedback }}</p>
+
+<section class="search-grid" *ngIf="foods.length">
+  <article routerLink="/recipe" [queryParams]="{ id: food.id }" class="foodCard surface-card" *ngFor="let food of foods">
+    <div class="card-media" *ngIf="food.image; else noImage">
+      <img [src]="food.image" [alt]="food.title" class="cardImage">
+    </div>
+    <ng-template #noImage>
+      <div class="card-media no-image">Sem imagem no momento</div>
+    </ng-template>
+    <p class="card-title">{{ food.title }}</p>
+  </article>
+</section>
