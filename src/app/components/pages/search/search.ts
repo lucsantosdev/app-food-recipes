@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SearchService } from '../../../services/search/search';
 import { finalize } from 'rxjs';
 import { NgFor, NgIf } from '@angular/common';
@@ -27,7 +27,10 @@ export class Search implements OnInit{
   public foods: SearchRecipe[] = [];
   public feedback = 'Search for a recipe to start.';
 
-  constructor(private service: SearchService) {}
+  constructor(
+    private service: SearchService,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     
@@ -38,22 +41,28 @@ export class Search implements OnInit{
     if (!safeQuery) {
       this.feedback = 'Please enter a search term.';
       this.foods = [];
+      this.cdr.detectChanges();
       return;
     }
 
     this.loading = true
     this.feedback = '';
     this.service.searchFood(safeQuery).pipe(
-      finalize(() => this.loading = false)
+      finalize(() => {
+        this.loading = false;
+        this.cdr.detectChanges();
+      })
     ).subscribe({
       next: (dataResponse) => {
         const response = dataResponse as SearchResponse;
         this.foods = response.results ?? [];
         this.feedback = this.foods.length ? '' : 'No recipes found for this search.';
+        this.cdr.detectChanges();
       },
       error: () => {
         this.foods = [];
         this.feedback = 'Unable to complete the search at this time.';
+        this.cdr.detectChanges();
       }
     })
   }
