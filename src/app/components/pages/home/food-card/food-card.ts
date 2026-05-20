@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RandomRecipes } from '../../../../services/random-recipes/random-recipes';
 import { finalize } from 'rxjs';
 import { NgFor, NgIf } from '@angular/common';
@@ -30,7 +30,10 @@ export class FoodCard implements OnInit {
   public loadingError = '';
   public readonly maxRecipes = 24;
 
-  constructor(private service: RandomRecipes) {}
+  constructor(
+    private service: RandomRecipes,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.getFoods();
@@ -40,7 +43,10 @@ export class FoodCard implements OnInit {
     this.loading = true;
 
     this.service.listRandomFood(6).pipe(
-      finalize(() => this.loading = false)
+      finalize(() => {
+        this.loading = false;
+        this.cdr.detectChanges();
+      })
     ).subscribe({
       next: (dataResponse) => {
         const incoming = this.extractRecipes(dataResponse);
@@ -52,9 +58,11 @@ export class FoodCard implements OnInit {
 
         this.foods = this.foods.concat(incoming);
         this.loadingError = '';
+        this.cdr.detectChanges();
       },
       error: () => {
         this.loadingError = 'Nao foi possivel carregar receitas agora. Tente novamente.';
+        this.cdr.detectChanges();
       }
     })
   }
@@ -66,7 +74,10 @@ export class FoodCard implements OnInit {
 
     this.loadingMore = true;
     this.service.listRandomFood(6).pipe(
-      finalize(() => this.loadingMore = false)
+      finalize(() => {
+        this.loadingMore = false;
+        this.cdr.detectChanges();
+      })
     ).subscribe({
       next: (dataResponse) => {
         const incoming = this.extractRecipes(dataResponse);
@@ -77,9 +88,11 @@ export class FoodCard implements OnInit {
 
         this.foods = this.foods.concat(incoming);
         this.loadingError = '';
+        this.cdr.detectChanges();
       },
       error: () => {
         this.loadingError = 'Nao foi possivel carregar mais receitas agora.';
+        this.cdr.detectChanges();
       }
     })
   }
