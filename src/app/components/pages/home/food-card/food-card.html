@@ -5,30 +5,30 @@
     </div>
 
     <ng-template #noImage>
-      <div class="empty-image">Sem imagem no momento</div>
+      <div class="empty-image">No image available</div>
     </ng-template>
 
     <div class="food-information">
       <p class="food-title">{{ food.title }}</p>
-      <p><strong>Tempo:</strong> {{ food.readyInMinutes }} minutos</p>
+      <p><strong>Time:</strong> {{ food.readyInMinutes }} minutes</p>
       <div class="tag-row">
-        <span class="tag" [class.positive]="food.vegetarian">Vegetariano: {{ food.vegetarian ? 'Sim' : 'Nao' }}</span>
-        <span class="tag" [class.positive]="food.vegan">Vegano: {{ food.vegan ? 'Sim' : 'Nao' }}</span>
+        <span class="tag" [class.positive]="food.vegetarian">Vegetarian: {{ food.vegetarian ? 'Yes' : 'No' }}</span>
+        <span class="tag" [class.positive]="food.vegan">Vegan: {{ food.vegan ? 'Yes' : 'No' }}</span>
       </div>
     </div>
   </article>
 </div>
 
-<div *ngIf="loading" class="spinner-border d-block mx-auto" role="status" aria-label="Carregando receitas"></div>
+<div *ngIf="loading" class="spinner-border d-block mx-auto" role="status" aria-label="Loading recipes"></div>
 
-<p *ngIf="!loading && !foods.length && !loadingError" class="feedback-text">Nenhuma receita encontrada.</p>
+<p *ngIf="!loading && !foods.length && !loadingError" class="feedback-text">No recipes found.</p>
 <p *ngIf="loadingError" class="feedback-text error">{{ loadingError }}</p>
 <button *ngIf="loadingError" type="button" class="btn-app d-block mx-auto mt-2" (click)="retryLoad()">
-  Tentar novamente
+  Try again
 </button>
 
-<div *ngIf="loadingMore" class="spinner-border d-block mx-auto my-4" role="status" aria-label="Carregando mais receitas"></div>
+<div *ngIf="loadingMore" class="spinner-border d-block mx-auto my-4" role="status" aria-label="Loading more recipes"></div>
 
 <button type="button" class="btn-app d-block mx-auto mt-4" (click)="loadMore()" [disabled]="!canLoadMore || loadingMore">
-  {{ canLoadMore ? 'Carregar mais' : 'Limite atingido' }}
+  {{ canLoadMore ? 'Load more' : 'Limit reached' }}
 </button>

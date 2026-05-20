@@ -25,7 +25,7 @@ export class Search implements OnInit{
   public loading = false;
   public query = '';
   public foods: SearchRecipe[] = [];
-  public feedback = 'Busque por uma receita para comecar.';
+  public feedback = 'Search for a recipe to start.';
 
   constructor(private service: SearchService) {}
 
@@ -36,7 +36,7 @@ export class Search implements OnInit{
   getSearch() {
     const safeQuery = this.query.trim();
     if (!safeQuery) {
-      this.feedback = 'Digite um termo para pesquisar.';
+      this.feedback = 'Please enter a search term.';
       this.foods = [];
       return;
     }
@@ -49,11 +49,11 @@ export class Search implements OnInit{
       next: (dataResponse) => {
         const response = dataResponse as SearchResponse;
         this.foods = response.results ?? [];
-        this.feedback = this.foods.length ? '' : 'Nenhuma receita encontrada para essa busca.';
+        this.feedback = this.foods.length ? '' : 'No recipes found for this search.';
       },
       error: () => {
         this.foods = [];
-        this.feedback = 'Nao foi possivel concluir a busca agora.';
+        this.feedback = 'Unable to complete the search at this time.';
       }
     })
   }

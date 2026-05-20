@@ -7,28 +7,28 @@
     <h1 class="foodTitle">{{ food.title }}</h1>
 
     <div class="metrics-grid">
-      <p><strong>Tempo:</strong> {{ food.readyInMinutes }} min</p>
-      <p><strong>Porcoes:</strong> {{ food.servings }}</p>
-      <p><strong>Preco por porcao:</strong> U$ {{ food.pricePerServing | number:'1.0-0' }}</p>
+      <p><strong>Time:</strong> {{ food.readyInMinutes }} min</p>
+      <p><strong>Servings:</strong> {{ food.servings }}</p>
+      <p><strong>Price per serving:</strong> ${{ food.pricePerServing | number:'1.0-0' }}</p>
       <p><strong>ID:</strong> {{ food.id }}</p>
     </div>
 
     <div class="badge-row">
-      <span class="badge" [class.badge-on]="food.vegetarian">Vegetariano: {{ food.vegetarian ? 'Sim' : 'Nao' }}</span>
-      <span class="badge" [class.badge-on]="food.vegan">Vegano: {{ food.vegan ? 'Sim' : 'Nao' }}</span>
-      <span class="badge" [class.badge-on]="food.veryHealthy">Saudavel: {{ food.veryHealthy ? 'Sim' : 'Nao' }}</span>
-      <span class="badge" [class.badge-on]="food.veryPopular">Popular: {{ food.veryPopular ? 'Sim' : 'Nao' }}</span>
+      <span class="badge" [class.badge-on]="food.vegetarian">Vegetarian: {{ food.vegetarian ? 'Yes' : 'No' }}</span>
+      <span class="badge" [class.badge-on]="food.vegan">Vegan: {{ food.vegan ? 'Yes' : 'No' }}</span>
+      <span class="badge" [class.badge-on]="food.veryHealthy">Healthy: {{ food.veryHealthy ? 'Yes' : 'No' }}</span>
+      <span class="badge" [class.badge-on]="food.veryPopular">Popular: {{ food.veryPopular ? 'Yes' : 'No' }}</span>
     </div>
 
     <a [href]="food.sourceUrl" target="_blank" rel="noopener noreferrer" class="source-link">
-      Ver receita completa no site de origem
+      View full recipe on the source website
     </a>
   </div>
 
   <div class="imgDiv surface-card">
     <img [src]="food.image" [alt]="food.title" class="foodImg" *ngIf="food.image; else noImage">
     <ng-template #noImage>
-      <p class="empty-image">Sem imagem no momento</p>
+      <p class="empty-image">No image available</p>
     </ng-template>
   </div>
 </section>
