@@ -29,6 +29,29 @@
   opacity: 0.9;
 }
 
+.footer-meta a {
+  color: var(--brand-0);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 2px;
+  transition: color 0.18s ease, text-decoration-color 0.18s ease;
+}
+
+.footer-meta a:hover {
+  color: var(--brand-1);
+  text-decoration-color: var(--brand-1);
+}
+
+.footer-meta a:visited {
+  color: color-mix(in srgb, var(--brand-0) 82%, #5f3420);
+}
+
+.footer-meta a:focus-visible {
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
 @media (max-width: 760px) {
   .footer-inner {
     width: min(1120px, 100% - 1rem);
