@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SingleRecipe } from '../../../../services/single-recipe/single-recipe';
 import { ActivatedRoute } from '@angular/router';
-import { finalize } from 'rxjs';
+import { finalize, Subscription } from 'rxjs';
 import { SimilarRecipes } from "./similar-recipes/similar-recipes";
 import { DecimalPipe, NgIf } from '@angular/common';
 
@@ -32,6 +32,8 @@ export class MainInformation implements OnInit{
   public food: RecipeDetail | null = null;
   public recipeIdSimilar = 0;
   public error = '';
+  private queryParamsSubscription?: Subscription;
+  private loadingGuardTimer?: ReturnType<typeof setTimeout>;
 
   constructor(
     private service: SingleRecipe, 
@@ -43,26 +45,31 @@ export class MainInformation implements OnInit{
   }
 
   getRecipeId() {
-    this.route.queryParams.subscribe((queryParams) => {
-      this.recipeId = Number(queryParams['id'] ?? 0);
-      this.recipeIdSimilar = this.recipeId;
+    this.applyRecipeIdFromValue(this.route.snapshot.queryParamMap.get('id'));
 
-      if (this.recipeId > 0) {
-        this.takeRecipe(this.recipeId);
-        return;
-      }
-
-      this.loading = false;
-      this.error = 'Receita invalida. Escolha uma receita na listagem.';
+    this.queryParamsSubscription = this.route.queryParams.subscribe((queryParams) => {
+      this.applyRecipeIdFromValue(queryParams['id']);
     });
   }
 
   takeRecipe(id: number) {
+    this.clearLoadingGuard();
     this.loading = true;
     this.error = '';
 
+    this.loadingGuardTimer = setTimeout(() => {
+      if (this.loading) {
+        this.loading = false;
+        this.food = null;
+        this.error = 'A requisicao demorou demais. Tente novamente em instantes.';
+      }
+    }, 20000);
+
     this.service.takeRecipe(id).pipe(
-      finalize(() => this.loading = false)
+      finalize(() => {
+        this.loading = false;
+        this.clearLoadingGuard();
+      })
     ).subscribe({
       next: (dataResponse) => {
         if (this.isRecipeDetail(dataResponse)) {
@@ -78,6 +85,35 @@ export class MainInformation implements OnInit{
         this.error = 'Nao foi possivel carregar os detalhes desta receita.';
       },
     });
+  }
+
+  private applyRecipeIdFromValue(value: unknown) {
+    const incomingId = Number(value ?? 0);
+
+    if (!Number.isInteger(incomingId) || incomingId <= 0) {
+      this.recipeId = 0;
+      this.recipeIdSimilar = 0;
+      this.food = null;
+      this.loading = false;
+      this.error = 'Receita invalida. Escolha uma receita na listagem.';
+      this.clearLoadingGuard();
+      return;
+    }
+
+    if (incomingId === this.recipeId && this.food) {
+      return;
+    }
+
+    this.recipeId = incomingId;
+    this.recipeIdSimilar = incomingId;
+    this.takeRecipe(incomingId);
+  }
+
+  private clearLoadingGuard() {
+    if (this.loadingGuardTimer) {
+      clearTimeout(this.loadingGuardTimer);
+      this.loadingGuardTimer = undefined;
+    }
   }
 
   private isRecipeDetail(value: unknown): value is RecipeDetail {
