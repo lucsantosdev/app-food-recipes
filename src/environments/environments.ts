@@ -1,5 +1,5 @@
 export const environment = {
-	apiKey: 'SPOONACULAR_API_KEY', // from https://spoonacular.com/food-api
+	apiBaseUrl: '/api/spoonacular',
 };
 
 /* 
@@ -12,13 +12,13 @@ export const environment = {
 
 3. In the API dashboard, you will find your API key. It is a long string of letters and numbers.
 
-4. Copy your API key and replace the placeholder 'SPOONACULAR_API_KEY' above. Make sure to keep the quotes around the key.
+4. Set the `SPOONACULAR_API_KEY` environment variable in your server platform. If you want to run the backend locally, you can create a `.env` file in the root of your backend project and add the following line: SPOONACULAR_API_KEY=your_api_key_here
 
 5. Save this file.
 
 *** IMPORTANT NOTES ***
 
-NOTE: Do not share your API key publicly, as it is tied to your account and usage limits.
+NOTE: The API key should stay in the backend/serverless environment variable and never be committed in frontend files.
 
 **** END OF INSTRUCTIONS *****
 

@@ -9,7 +9,7 @@ export class RandomRecipes {
   constructor(private http: HttpClient) {}
 
   listRandomFood(take: number) {
-    const apiUrl = `https://api.spoonacular.com/recipes/random?apiKey=${environment.apiKey}&number=${take}`;
+    const apiUrl = `${environment.apiBaseUrl}?endpoint=random&take=${take}`;
     return this.http.get(apiUrl);
   }
 }

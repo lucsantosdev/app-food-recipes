@@ -10,12 +10,12 @@ export class SingleRecipe {
   constructor(private http: HttpClient) {}
 
   takeRecipe(id: number) {
-    const apiUrl = `https://api.spoonacular.com/recipes/${id}/information?apiKey=${environment.apiKey}`;
+    const apiUrl = `${environment.apiBaseUrl}?endpoint=recipe&id=${id}`;
     return this.http.get(apiUrl);
   }
 
   takeSimilarRecipes(id: number) {
-    const apiUrl = `https://api.spoonacular.com/recipes/${id}/similar?apiKey=${environment.apiKey}`;
+    const apiUrl = `${environment.apiBaseUrl}?endpoint=similar&id=${id}`;
     return this.http.get(apiUrl);
   }
 }

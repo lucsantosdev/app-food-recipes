@@ -52,7 +52,7 @@ export class FoodCard implements OnInit {
         const incoming = this.extractRecipes(dataResponse);
 
         if (!incoming.length) {
-          this.loadingError = 'A API respondeu sem receitas no momento. Tente novamente em alguns segundos.';
+          this.loadingError = 'The API responded with no recipes at the moment. Please try again in a few seconds.';
           return;
         }
 
@@ -61,7 +61,7 @@ export class FoodCard implements OnInit {
         this.cdr.detectChanges();
       },
       error: () => {
-        this.loadingError = 'Nao foi possivel carregar receitas agora. Tente novamente.';
+        this.loadingError = 'We were unable to load recipes right now. Please try again.';
         this.cdr.detectChanges();
       }
     })
@@ -82,7 +82,7 @@ export class FoodCard implements OnInit {
       next: (dataResponse) => {
         const incoming = this.extractRecipes(dataResponse);
         if (!incoming.length) {
-          this.loadingError = 'A API respondeu sem novas receitas agora.';
+          this.loadingError = 'The API responded with no new recipes at the moment.';
           return;
         }
 
@@ -91,7 +91,7 @@ export class FoodCard implements OnInit {
         this.cdr.detectChanges();
       },
       error: () => {
-        this.loadingError = 'Nao foi possivel carregar mais receitas agora.';
+        this.loadingError = 'We were unable to load more recipes right now. Please try again.';
         this.cdr.detectChanges();
       }
     })

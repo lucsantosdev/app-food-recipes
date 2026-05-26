@@ -10,7 +10,7 @@ export class SearchService {
   constructor(private http: HttpClient) {}
 
   searchFood(query: string) {
-    const apiUrl = `https://api.spoonacular.com/recipes/complexSearch?apiKey=${environment.apiKey}&query=${encodeURIComponent(query)}&number=10`;
+    const apiUrl = `${environment.apiBaseUrl}?endpoint=search&query=${encodeURIComponent(query)}`;
     return this.http.get(apiUrl);
   }
 
