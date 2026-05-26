@@ -41,6 +41,10 @@ function buildUpstreamUrl(endpoint, query, apiKey) {
 }
 
 module.exports = async function handler(req, res) {
+  res.setHeader('Cache-Control', 'no-store, max-age=0');
+  res.setHeader('Pragma', 'no-cache');
+  res.setHeader('Expires', '0');
+
   if (req.method !== 'GET') {
     return json(res, 405, { error: 'Method not allowed' });
   }
@@ -59,7 +63,7 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const upstreamResponse = await fetch(upstreamUrl);
+    const upstreamResponse = await fetch(upstreamUrl, { cache: 'no-store' });
     const text = await upstreamResponse.text();
 
     res.setHeader('Content-Type', upstreamResponse.headers.get('content-type') || 'application/json');
