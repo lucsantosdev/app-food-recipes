@@ -17,7 +17,7 @@ interface SimilarRecipe {
   styleUrl: './similar-recipes.css',
 })
 export class SimilarRecipes implements OnInit, OnChanges {
-  public loading = true;
+  public loading = false;
   public similarRecipes: SimilarRecipe[] = [];
   public error = '';
 
@@ -30,13 +30,15 @@ export class SimilarRecipes implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['recipeIdSimilar'] && !changes['recipeIdSimilar'].firstChange) {
+    if (changes['recipeIdSimilar']) {
       this.takeSimilarRecipes(this.recipeIdSimilar);
     }
   }
 
   takeSimilarRecipes(id: number) {
     if (!id) {
+      this.loading = false;
+      this.similarRecipes = [];
       return;
     }
 

@@ -65,12 +65,27 @@ export class MainInformation implements OnInit{
       finalize(() => this.loading = false)
     ).subscribe({
       next: (dataResponse) => {
-        this.food = dataResponse as RecipeDetail;
+        if (this.isRecipeDetail(dataResponse)) {
+          this.food = dataResponse;
+          return;
+        }
+
+        this.food = null;
+        this.error = 'Receita nao encontrada para este ID.';
       },
       error: () => {
         this.food = null;
         this.error = 'Nao foi possivel carregar os detalhes desta receita.';
       },
     });
+  }
+
+  private isRecipeDetail(value: unknown): value is RecipeDetail {
+    if (!value || typeof value !== 'object') {
+      return false;
+    }
+
+    const recipe = value as Partial<RecipeDetail>;
+    return typeof recipe.id === 'number' && typeof recipe.title === 'string';
   }
 }
