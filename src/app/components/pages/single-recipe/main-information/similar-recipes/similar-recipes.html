@@ -1,17 +1,24 @@
 <section class="similar-wrap">
   <p class="similar-title">Similar Recipes</p>
 
-  <div *ngIf="loading" class="spinner-border d-block mx-auto my-4" role="status" aria-label="Loading similar recipes"></div>
-  <p *ngIf="error" class="similar-feedback error">{{ error }}</p>
+  @if (loading) {
+    <div class="spinner-border d-block mx-auto my-4" role="status" aria-label="Loading similar recipes"></div>
+  }
 
-  <div *ngIf="!loading && similarRecipes.length; else noRecipe" class="similar-grid">
-    <article routerLink="/recipe" [queryParams]="{ id: recipe.id }" class="cardRecipe surface-card" *ngFor="let recipe of similarRecipes">
-      <p class="recipe-name">{{ recipe.title }}</p>
-      <p class="recipe-time">Preparation time: {{ recipe.readyInMinutes }} minutes</p>
-    </article>
-  </div>
+  @if (error) {
+    <p class="similar-feedback error">{{ error }}</p>
+  }
+
+  @if (!loading && similarRecipes.length) {
+    <div class="similar-grid">
+      @for (recipe of similarRecipes; track recipe.id) {
+        <article routerLink="/recipe" [queryParams]="{ id: recipe.id }" class="cardRecipe surface-card">
+          <p class="recipe-name">{{ recipe.title }}</p>
+          <p class="recipe-time">Preparation time: {{ recipe.readyInMinutes }} minutes</p>
+        </article>
+      }
+    </div>
+  } @else {
+    <p class="similar-feedback">No similar recipes available at the moment.</p>
+  }
 </section>
-
-<ng-template #noRecipe>
-  <p class="similar-feedback">No similar recipes available at the moment.</p>
-</ng-template>

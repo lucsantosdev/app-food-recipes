@@ -1,33 +1,44 @@
 <div class="recipes-grid">
-  <article routerLink="/recipe" [queryParams]="{ id: food.id }" *ngFor="let food of foods" class="food-card surface-card">
-    <div class="image-wrap" *ngIf="food.image; else noImage">
-      <img [src]="food.image" [alt]="food.title" class="imageCard">
-    </div>
+  @for (food of foods; track food.id) {
+    <article routerLink="/recipe" [queryParams]="{ id: food.id }" class="food-card surface-card">
+      @if (food.image) {
+        <div class="image-wrap">
+          <img [src]="food.image" [alt]="food.title" class="imageCard">
+        </div>
+      } @else {
+        <div class="empty-image">No image available</div>
+      }
 
-    <ng-template #noImage>
-      <div class="empty-image">No image available</div>
-    </ng-template>
-
-    <div class="food-information">
-      <p class="food-title">{{ food.title }}</p>
-      <p><strong>Time:</strong> {{ food.readyInMinutes }} minutes</p>
-      <div class="tag-row">
-        <span class="tag" [class.positive]="food.vegetarian">Vegetarian: {{ food.vegetarian ? 'Yes' : 'No' }}</span>
-        <span class="tag" [class.positive]="food.vegan">Vegan: {{ food.vegan ? 'Yes' : 'No' }}</span>
+      <div class="food-information">
+        <p class="food-title">{{ food.title }}</p>
+        <p><strong>Time:</strong> {{ food.readyInMinutes }} minutes</p>
+        <div class="tag-row">
+          <span class="tag" [class.positive]="food.vegetarian">Vegetarian: {{ food.vegetarian ? 'Yes' : 'No' }}</span>
+          <span class="tag" [class.positive]="food.vegan">Vegan: {{ food.vegan ? 'Yes' : 'No' }}</span>
+        </div>
       </div>
-    </div>
-  </article>
+    </article>
+  }
 </div>
 
-<div *ngIf="loading" class="spinner-border d-block mx-auto" role="status" aria-label="Loading recipes"></div>
+@if (loading) {
+  <div class="spinner-border d-block mx-auto" role="status" aria-label="Loading recipes"></div>
+}
 
-<p *ngIf="!loading && !foods.length && !loadingError" class="feedback-text">No recipes found.</p>
-<p *ngIf="loadingError" class="feedback-text error">{{ loadingError }}</p>
-<button *ngIf="loadingError" type="button" class="btn-app d-block mx-auto mt-2" (click)="retryLoad()">
-  Try again
-</button>
+@if (!loading && !foods.length && !loadingError) {
+  <p class="feedback-text">No recipes found.</p>
+}
 
-<div *ngIf="loadingMore" class="spinner-border d-block mx-auto my-4" role="status" aria-label="Loading more recipes"></div>
+@if (loadingError) {
+  <p class="feedback-text error">{{ loadingError }}</p>
+  <button type="button" class="btn-app d-block mx-auto mt-2" (click)="retryLoad()">
+    Try again
+  </button>
+}
+
+@if (loadingMore) {
+  <div class="spinner-border d-block mx-auto my-4" role="status" aria-label="Loading more recipes"></div>
+}
 
 <button type="button" class="btn-app d-block mx-auto mt-4" (click)="loadMore()" [disabled]="!canLoadMore || loadingMore">
   {{ canLoadMore ? 'Load more' : 'Limit reached' }}

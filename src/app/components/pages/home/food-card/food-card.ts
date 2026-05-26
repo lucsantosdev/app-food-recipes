@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { RandomRecipes } from '../../../../services/random-recipes/random-recipes';
 import { finalize } from 'rxjs';
-import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 interface RecipeCard {
@@ -19,7 +18,7 @@ interface RandomRecipesResponse {
 
 @Component({
   selector: 'app-food-card',
-  imports: [NgFor, NgIf, RouterLink],
+  imports: [RouterLink],
   templateUrl: './food-card.html',
   styleUrl: './food-card.css',
 })

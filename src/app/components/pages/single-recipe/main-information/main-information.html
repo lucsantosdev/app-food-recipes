@@ -1,36 +1,49 @@
-<div *ngIf="loading" class="spinner-border d-block mx-auto my-5" role="status" aria-label="Carregando receita"></div>
+@if (loading) {
+  <div class="spinner-border d-block mx-auto my-5" role="status" aria-label="Carregando receita"></div>
+}
 
-<p *ngIf="error" class="error-message">{{ error }}</p>
+@if (error) {
+  <p class="error-message">{{ error }}</p>
+}
 
-<section class="recipe-detail" *ngIf="!loading && food">
-  <div class="textDiv surface-card">
-    <h1 class="foodTitle">{{ food.title }}</h1>
+@if (!loading && !food && !error) {
+  <p class="error-message">Details are unavailable for this recipe.</p>
+}
 
-    <div class="metrics-grid">
-      <p><strong>Time:</strong> {{ food.readyInMinutes }} min</p>
-      <p><strong>Servings:</strong> {{ food.servings }}</p>
-      <p><strong>Price per serving:</strong> ${{ food.pricePerServing | number:'1.0-0' }}</p>
-      <p><strong>ID:</strong> {{ food.id }}</p>
+@if (!loading && food) {
+  <section class="recipe-detail">
+    <div class="textDiv surface-card">
+      <h1 class="foodTitle">{{ food.title }}</h1>
+
+      <div class="metrics-grid">
+        <p><strong>Time:</strong> {{ food.readyInMinutes }} min</p>
+        <p><strong>Servings:</strong> {{ food.servings }}</p>
+        <p><strong>Price per serving:</strong> ${{ food.pricePerServing | number:'1.0-0' }}</p>
+        <p><strong>ID:</strong> {{ food.id }}</p>
+      </div>
+
+      <div class="badge-row">
+        <span class="badge" [class.badge-on]="food.vegetarian">Vegetarian: {{ food.vegetarian ? 'Yes' : 'No' }}</span>
+        <span class="badge" [class.badge-on]="food.vegan">Vegan: {{ food.vegan ? 'Yes' : 'No' }}</span>
+        <span class="badge" [class.badge-on]="food.veryHealthy">Healthy: {{ food.veryHealthy ? 'Yes' : 'No' }}</span>
+        <span class="badge" [class.badge-on]="food.veryPopular">Popular: {{ food.veryPopular ? 'Yes' : 'No' }}</span>
+      </div>
+
+      <a [href]="food.sourceUrl" target="_blank" rel="noopener noreferrer" class="source-link">
+        View full recipe on the source website
+      </a>
     </div>
 
-    <div class="badge-row">
-      <span class="badge" [class.badge-on]="food.vegetarian">Vegetarian: {{ food.vegetarian ? 'Yes' : 'No' }}</span>
-      <span class="badge" [class.badge-on]="food.vegan">Vegan: {{ food.vegan ? 'Yes' : 'No' }}</span>
-      <span class="badge" [class.badge-on]="food.veryHealthy">Healthy: {{ food.veryHealthy ? 'Yes' : 'No' }}</span>
-      <span class="badge" [class.badge-on]="food.veryPopular">Popular: {{ food.veryPopular ? 'Yes' : 'No' }}</span>
+    <div class="imgDiv surface-card">
+      @if (food.image) {
+        <img [src]="food.image" [alt]="food.title" class="foodImg">
+      } @else {
+        <p class="empty-image">No image available</p>
+      }
     </div>
+  </section>
+}
 
-    <a [href]="food.sourceUrl" target="_blank" rel="noopener noreferrer" class="source-link">
-      View full recipe on the source website
-    </a>
-  </div>
-
-  <div class="imgDiv surface-card">
-    <img [src]="food.image" [alt]="food.title" class="foodImg" *ngIf="food.image; else noImage">
-    <ng-template #noImage>
-      <p class="empty-image">No image available</p>
-    </ng-template>
-  </div>
-</section>
-
-<app-similar-recipes *ngIf="!loading && !error && food && recipeIdSimilar" [recipeIdSimilar]="recipeIdSimilar"></app-similar-recipes>
+@if (!loading && !error && food && recipeIdSimilar) {
+  <app-similar-recipes [recipeIdSimilar]="recipeIdSimilar"></app-similar-recipes>
+}

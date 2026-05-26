@@ -3,7 +3,8 @@ import { SingleRecipe } from '../../../../services/single-recipe/single-recipe';
 import { ActivatedRoute } from '@angular/router';
 import { finalize, Subscription } from 'rxjs';
 import { SimilarRecipes } from "./similar-recipes/similar-recipes";
-import { DecimalPipe, NgIf } from '@angular/common';
+import { DecimalPipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 
 interface RecipeDetail {
   id: number;
@@ -22,7 +23,7 @@ interface RecipeDetail {
 
 @Component({
   selector: 'app-main-information',
-  imports: [SimilarRecipes, NgIf, DecimalPipe],
+  imports: [SimilarRecipes, DecimalPipe],
   templateUrl: './main-information.html',
   styleUrl: './main-information.css',
 })
@@ -42,6 +43,11 @@ export class MainInformation implements OnInit{
 
   ngOnInit(): void {
     this.getRecipeId();
+  }
+
+  ngOnDestroy(): void {
+    this.queryParamsSubscription?.unsubscribe();
+    this.clearLoadingGuard();
   }
 
   getRecipeId() {
@@ -80,9 +86,9 @@ export class MainInformation implements OnInit{
         this.food = null;
         this.error = 'Receita nao encontrada para este ID.';
       },
-      error: () => {
+      error: (errorResponse: unknown) => {
         this.food = null;
-        this.error = 'Nao foi possivel carregar os detalhes desta receita.';
+        this.error = this.resolveRecipeError(errorResponse);
       },
     });
   }
@@ -114,6 +120,28 @@ export class MainInformation implements OnInit{
       clearTimeout(this.loadingGuardTimer);
       this.loadingGuardTimer = undefined;
     }
+  }
+
+  private resolveRecipeError(errorResponse: unknown): string {
+    if (errorResponse instanceof HttpErrorResponse) {
+      if (errorResponse.status === 404) {
+        return 'Receita nao encontrada.';
+      }
+
+      if (errorResponse.status === 401) {
+        return 'Erro de autenticacao da API no servidor.';
+      }
+
+      if (errorResponse.status === 429) {
+        return 'Limite de requisicoes da API atingido. Tente novamente mais tarde.';
+      }
+
+      if (errorResponse.status >= 500) {
+        return 'Erro no servidor ao buscar esta receita.';
+      }
+    }
+
+    return 'Nao foi possivel carregar os detalhes desta receita.';
   }
 
   private isRecipeDetail(value: unknown): value is RecipeDetail {

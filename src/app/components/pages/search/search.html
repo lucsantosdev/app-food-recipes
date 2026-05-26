@@ -15,18 +15,27 @@
   </div>
 </section>
 
-<div *ngIf="loading" class="spinner-border d-block mx-auto mt-4" role="status" aria-label="Carregando busca"></div>
+@if (loading) {
+  <div class="spinner-border d-block mx-auto mt-4" role="status" aria-label="Loading recipes"></div>
+}
 
-<p *ngIf="feedback && !loading" class="search-feedback">{{ feedback }}</p>
+@if (feedback && !loading) {
+  <p class="search-feedback">{{ feedback }}</p>
+}
 
-<section class="search-grid" *ngIf="foods.length">
-  <article routerLink="/recipe" [queryParams]="{ id: food.id }" class="foodCard surface-card" *ngFor="let food of foods">
-    <div class="card-media" *ngIf="food.image; else noImage">
-      <img [src]="food.image" [alt]="food.title" class="cardImage">
-    </div>
-    <ng-template #noImage>
-      <div class="card-media no-image">No image available</div>
-    </ng-template>
-    <p class="card-title">{{ food.title }}</p>
-  </article>
-</section>
+@if (foods.length) {
+  <section class="search-grid">
+    @for (food of foods; track food.id) {
+      <article routerLink="/recipe" [queryParams]="{ id: food.id }" class="foodCard surface-card">
+        @if (food.image) {
+          <div class="card-media">
+            <img [src]="food.image" [alt]="food.title" class="cardImage">
+          </div>
+        } @else {
+          <div class="card-media no-image">No image available</div>
+        }
+        <p class="card-title">{{ food.title }}</p>
+      </article>
+    }
+  </section>
+}

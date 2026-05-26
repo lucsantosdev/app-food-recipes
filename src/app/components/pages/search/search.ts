@@ -1,7 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { SearchService } from '../../../services/search/search';
 import { finalize } from 'rxjs';
-import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
@@ -17,7 +16,7 @@ interface SearchResponse {
 
 @Component({
   selector: 'app-search',
-  imports: [NgFor, NgIf, RouterLink, FormsModule],
+  imports: [RouterLink, FormsModule],
   templateUrl: './search.html',
   styleUrl: './search.css',
 })

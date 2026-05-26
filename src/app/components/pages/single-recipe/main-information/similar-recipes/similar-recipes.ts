@@ -1,7 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { SingleRecipe } from '../../../../../services/single-recipe/single-recipe';
 import { finalize } from 'rxjs';
-import { NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
 interface SimilarRecipe {
@@ -12,7 +11,7 @@ interface SimilarRecipe {
 
 @Component({
   selector: 'app-similar-recipes',
-  imports: [NgFor, NgIf, RouterLink],
+  imports: [RouterLink],
   templateUrl: './similar-recipes.html',
   styleUrl: './similar-recipes.css',
 })
